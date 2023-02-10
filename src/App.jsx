@@ -9,12 +9,15 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { db } from "../firebase-config";
-import { async } from "@firebase/util";
 
 function App() {
   const [todo, setTodo] = useState("");
   const [todos, setTodos] = useState([]);
   const todosCollectionRef = collection(db, "todos");
+
+  useEffect(() => {
+    document.title = todos.length > 0 ? `Todos(${todos.length})` : "Todos";
+  }, [todos]);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(todosCollectionRef, (snapshot) => {
